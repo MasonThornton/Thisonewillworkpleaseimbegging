@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
 
         if (xSpeed == 0)
         {
-            wait = 0;
+                 wait = 0;
 
             animator.SetFloat("wait",wait);
         }
