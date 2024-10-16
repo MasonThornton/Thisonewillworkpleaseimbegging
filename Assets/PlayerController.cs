@@ -1,15 +1,21 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
+    Animator animator;
     Rigidbody2D rigidBody;
     public float speed = 5.0f;
     public float jumpForce = 8.0f;
     public float airControlForce = 10.0f;
     public float airControlMax = 1.5f;
+    public float wait = 5;
+    
     Vector2 boxExtents;
 
     //use this for initialization
@@ -17,14 +23,34 @@ public class PlayerController : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>();
         boxExtents = GetComponent<BoxCollider2D>().bounds.extents;
+        animator = GetComponent<Animator>();
     }
 
     //Update is called once per frame
     void Update()
+
     {
+
         if (rigidBody.velocity.x * transform.localScale.x < 0.0f)
             transform.localScale = new Vector3(-transform.localScale.x,
            transform.localScale.y, transform.localScale.z);
+        float xSpeed = Mathf.Abs(rigidBody.velocity.x);
+        animator.SetFloat("xspeed", xSpeed);
+        float ySpeed = Mathf.Abs(rigidBody.velocity.y);
+        animator.SetFloat("yspeed", ySpeed);
+
+        if (xSpeed == 0)
+        {
+            wait = 0;
+
+            animator.SetFloat("wait",wait);
+        }
+        else
+        {
+            wait = 5;
+            animator.SetFloat("wait", wait);
+        }
+
     }
 
     void FixedUpdate()
