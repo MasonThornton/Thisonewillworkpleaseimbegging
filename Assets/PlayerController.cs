@@ -15,14 +15,11 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 8.0f;
     public float airControlForce = 10.0f;
     public float airControlMax = 1.5f;
-<<<<<<< HEAD
+
        public float score_update = 0;
     public static float score = 0;
- 
 
-=======
-    public float score = 0;
->>>>>>> 1107c0aaac5b617547ee5a4df820136f0fec662b
+
     Vector2 boxExtents;
     public TMP_Text messageText;
 
@@ -66,23 +63,16 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("xspeed", xSpeed);
         float ySpeed = Mathf.Abs(rigidBody.velocity.y);
         animator.SetFloat("yspeed", ySpeed);
-<<<<<<< HEAD
+
 
    
 
     }
-=======
-     
->>>>>>> 1107c0aaac5b617547ee5a4df820136f0fec662b
 
-    void OnTriggerEnter2D(Collider2D coll)
-    {
-        if (coll.gameObject.tag == "coin")
-        {
-            Destroy(coll.gameObject);
-            score += 1;
-        }
-    }
+
+
+
+
 
     void FixedUpdate()
     {

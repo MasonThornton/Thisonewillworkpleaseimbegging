@@ -6,6 +6,9 @@ TagManager:
   tags:
   - coin
   - text
+  - mace
+  - mace2
+  - ground
   layers:
   - Default
   - TransparentFX
