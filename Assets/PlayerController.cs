@@ -14,8 +14,10 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 8.0f;
     public float airControlForce = 10.0f;
     public float airControlMax = 1.5f;
-    public float wait = 5;
-    
+       public float score_update = 0;
+    public static float score = 0;
+ 
+
     Vector2 boxExtents;
 
     //use this for initialization
@@ -39,18 +41,17 @@ public class PlayerController : MonoBehaviour
         float ySpeed = Mathf.Abs(rigidBody.velocity.y);
         animator.SetFloat("yspeed", ySpeed);
 
-        if (xSpeed == 0)
-        {
-                 wait = 0;
+   
 
-            animator.SetFloat("wait",wait);
-        }
-        else
-        {
-            wait = 5;
-            animator.SetFloat("wait", wait);
-        }
+    }
 
+    void OnTriggerEnter2D(Collider2D coll)
+    {
+        if (coll.gameObject.tag == "coin")
+        {
+            Destroy(coll.gameObject);
+            score += 1;
+        }
     }
 
     void FixedUpdate()
@@ -69,7 +70,7 @@ public class PlayerController : MonoBehaviour
         RaycastHit2D result = Physics2D.BoxCast(bottom, hitBoxSize, 0.0f, new Vector3(0.0f, -1.0f), 0.0f, 1 << LayerMask.NameToLayer("Ground"));
 
         bool grounded = result.collider != null && result.normal.y > 0.9f;
-
+    
         if (grounded)
         {
             if (Input.GetAxis("Jump") > 0.0f)
