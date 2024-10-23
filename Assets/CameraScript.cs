@@ -16,12 +16,12 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float steve = 10;
-        while (steve == 10)
-        {
-            Debug.Log("HA");
-            steve = steve + 1;
-        }
+       // float steve = 10;
+      //  while (steve == 10)
+     //   {
+      //      Debug.Log("HA");
+      //      steve = steve + 1;
+      //  }
         Vector3 player = attachedPlayer.transform.position;
         Vector3 newCamPos = player * blendAmount + transform.position * (1.0f - blendAmount);
         transform.position = new Vector3(newCamPos.x, newCamPos.y, transform.position.z);

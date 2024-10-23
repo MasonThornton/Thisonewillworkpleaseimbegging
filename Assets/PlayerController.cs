@@ -5,6 +5,7 @@ using System.Threading;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,9 +15,9 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 8.0f;
     public float airControlForce = 10.0f;
     public float airControlMax = 1.5f;
-    public float wait = 5;
-    
+    public float score = 0;
     Vector2 boxExtents;
+    public TMP_Text messageText;
 
     //use this for initialization
     void Start()
@@ -26,30 +27,39 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    void OnTriggerEnter2D(Collider2D coll)
+    {
+        if (coll.gameObject.tag == "coin")
+        {
+            Destroy(coll.gameObject);
+            score += 1;
+            Debug.Log(score);
+    
+
+        }
+    }
+
+
     //Update is called once per frame
     void Update()
 
     {
+       
+
+        {
+            
+        }
+        float blinkVal = Random.Range(0.0f, 200.0f);
+        if (blinkVal < 1.0f)
+            animator.SetTrigger("blinktrigger");
 
         if (rigidBody.velocity.x * transform.localScale.x < 0.0f)
-            transform.localScale = new Vector3(-transform.localScale.x,
-           transform.localScale.y, transform.localScale.z);
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         float xSpeed = Mathf.Abs(rigidBody.velocity.x);
         animator.SetFloat("xspeed", xSpeed);
         float ySpeed = Mathf.Abs(rigidBody.velocity.y);
         animator.SetFloat("yspeed", ySpeed);
-
-        if (xSpeed == 0)
-        {
-                 wait = 0;
-
-            animator.SetFloat("wait",wait);
-        }
-        else
-        {
-            wait = 5;
-            animator.SetFloat("wait", wait);
-        }
+     
 
     }
 
