@@ -6,18 +6,22 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 using TMPro;
+using System.ComponentModel;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     Animator animator;
+    public AudioSource coinSound;
     Rigidbody2D rigidBody;
     public float speed = 5.0f;
     public float jumpForce = 8.0f;
     public float airControlForce = 10.0f;
     public float airControlMax = 1.5f;
-
-       public float score_update = 0;
+    public static bool dead = false;
+    public float score_update = 0;
     public static float score = 0;
+
 
 
     Vector2 boxExtents;
@@ -38,7 +42,7 @@ public class PlayerController : MonoBehaviour
             Destroy(coll.gameObject);
             score += 1;
             Debug.Log(score);
-    
+            coinSound.Play();
 
         }
     }
@@ -48,8 +52,14 @@ public class PlayerController : MonoBehaviour
     void Update()
 
     {
-       
 
+        if (gameObject.tag == "Player" && dead == true)
+
+
+        {
+          
+            Destroy(gameObject);
+        }
         {
             
         }

@@ -9,7 +9,9 @@ using UnityEngine.UIElements;
 
 public class SawCode : MonoBehaviour
 {
-    Rigidbody2D rigidBody;
+
+
+   Rigidbody2D rigidBody;
     // identity of the object 
     // time until falling 
     float waitTimer = 2;
@@ -24,13 +26,16 @@ public class SawCode : MonoBehaviour
     public float returntimer = 2;
     public float disbet;
     public bool inside = false;
+
     // Start is called before the first frame update
     void Start()
     {
+
         rigidBody = GetComponent<Rigidbody2D>();
         {
             startingx = transform.position.x;
             startingy = transform.position.y;
+       
 
         }
 
@@ -42,6 +47,7 @@ public class SawCode : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         rigidBody = GetComponent<Rigidbody2D>();
         disbet = transform.position.y - startingy;
 
@@ -125,8 +131,8 @@ public class SawCode : MonoBehaviour
           
             {
                 inside = false;
-                Destroy(collision.gameObject);
-            }
+            PlayerController.dead = true;
+        }
    
             
 

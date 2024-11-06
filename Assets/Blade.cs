@@ -61,7 +61,7 @@ public class SawBlade : MonoBehaviour
         {
 
             {
-                Destroy(coll.gameObject);
+                PlayerController.dead = true;
             }
         }
     }
