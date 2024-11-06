@@ -14,7 +14,7 @@ public class SawCode : MonoBehaviour
     // time until falling 
     float waitTimer = 2;
     // start
-    float beginWait = 0;
+    bool beginWait = false;
     public float startingx;
     public float startingy;
     // current
@@ -23,6 +23,7 @@ public class SawCode : MonoBehaviour
     // timer until it needs to return
     public float returntimer = 2;
     public float disbet;
+    public bool inside = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,7 +45,7 @@ public class SawCode : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         disbet = transform.position.y - startingy;
 
-        if (beginWait == 1)
+        if (beginWait == true)
         {
             waitTimer -= Time.deltaTime;
             Debug.Log("2");
@@ -53,9 +54,9 @@ public class SawCode : MonoBehaviour
         {
 
             rigidBody.gravityScale = 1;
-            beginWait = 0;
+            beginWait = false;
             waitTimer = 15;
-            returntime = true;
+
 
             Debug.Log("1");
         }
@@ -75,7 +76,7 @@ public class SawCode : MonoBehaviour
 
         if (returntimer < 0)
         {
-            rigidBody.velocity = new Vector2(0, Mathf.Clamp(-disbet,1,3));
+            rigidBody.velocity = new Vector2(0, Mathf.Clamp(-disbet, 1, 3));
             rigidBody.gravityScale = 0;
             Debug.Log(disbet);
         }
@@ -83,9 +84,14 @@ public class SawCode : MonoBehaviour
         if (transform.position.y >= startingy && returntimer < 0)
         {
             returntime = false;
-            rigidBody.velocity = new Vector2(0,0);
+            rigidBody.velocity = new Vector2(0, 0);
             returntimer = 2;
             waitTimer = 2;
+            if (inside == true)
+                beginWait = true;
+
+
+   
 
 
         }
@@ -101,8 +107,9 @@ public class SawCode : MonoBehaviour
         if (coll.gameObject.tag == "Player")
 
         {
-            beginWait = 1;
+            beginWait = true;
             Debug.Log("1");
+            inside = true;
         }
 
 
@@ -114,12 +121,13 @@ public class SawCode : MonoBehaviour
     {
    
         if (collision.gameObject.tag == "Player")
-        {
-
+     
+          
             {
+                inside = false;
                 Destroy(collision.gameObject);
             }
-        }
+   
             
 
 
@@ -149,7 +157,8 @@ public class SawCode : MonoBehaviour
 
                 {
                     waitTimer = 2;
-                    beginWait = 0;
+            inside = false;
+                    beginWait = false;
                 }
 
 
