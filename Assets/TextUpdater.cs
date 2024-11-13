@@ -14,11 +14,7 @@ public class TextUpdater : MonoBehaviour
 
     public TMP_Text messageText;
 
-    void Start()
-    {
 
-
-    }
 
     void Update() // Or other method
         {

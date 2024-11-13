@@ -10,6 +10,7 @@ TagManager:
   - mace2
   - ground
   - key
+  - door
   layers:
   - Default
   - TransparentFX

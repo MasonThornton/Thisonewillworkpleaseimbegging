@@ -30,15 +30,12 @@ public class SawBlade : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         rigidBody.rotation += -speed;
        
-        if (state == false)
-        {
-            rigidBody.velocity = new Vector2(speed, 0);
-        }
 
-        if (state == true)
-        {
+    
             rigidBody.velocity = new Vector2(speed, 0);
-        }
+
+
+       
 
 
         if (transform.position.x <= sawx[0] && state == true)

@@ -20,7 +20,9 @@ public class PlayerController : MonoBehaviour
     public float airControlMax = 1.5f;
     public static bool dead = false;
     public static float score = 0;
-    List<string> PlayerInventory = new List<string>();
+    public static float py;
+    public static float plscale;
+   public static List<float> PlayerInventory = new List<float>();
 
 
     Vector2 boxExtents;
@@ -29,9 +31,11 @@ public class PlayerController : MonoBehaviour
     //use this for initialization
     void Start()
     {
+        plscale = -transform.localScale.x;
         rigidBody = GetComponent<Rigidbody2D>();
         boxExtents = GetComponent<BoxCollider2D>().bounds.extents;
         animator = GetComponent<Animator>();
+    
     }
 
     void OnTriggerEnter2D(Collider2D coll)
@@ -39,7 +43,7 @@ public class PlayerController : MonoBehaviour
         if (coll.gameObject.tag == "coin")
         {
             Destroy(coll.gameObject);
-            score += 1;
+            score += 100;
             Debug.Log(score);
             coinSound.Play();
 
@@ -47,22 +51,21 @@ public class PlayerController : MonoBehaviour
 
         if (coll.gameObject.tag == "key")
         {
-            PlayerInventory.Add(gameObject.name);
-;
 
-            Debug.Log(PlayerInventory.IndexOf("Key1"));
+
             Destroy(coll.gameObject);
+
 
 
         }
     }
 
 
-    //Update is called once per frame
-    void Update()
+        //Update is called once per frame
+        void Update()
 
     {
-    
+        py = transform.position.y;
 
         if (gameObject.tag == "Player" && dead == true)
 
@@ -77,6 +80,8 @@ public class PlayerController : MonoBehaviour
         float blinkVal = Random.Range(0.0f, 900.0f);
         if (blinkVal < 1.0f)
             animator.SetTrigger("blinktrigger");
+
+        plscale = -transform.localScale.x;
 
         if (rigidBody.velocity.x * transform.localScale.x < 0.0f)
             transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
@@ -109,6 +114,7 @@ public class PlayerController : MonoBehaviour
         Vector2 hitBoxSize = new Vector2(boxExtents.x * 2.0f, 0.05f);
 
         RaycastHit2D result = Physics2D.BoxCast(bottom, hitBoxSize, 0.0f, new Vector3(0.0f, -1.0f), 0.0f, 1 << LayerMask.NameToLayer("Ground"));
+
 
         bool grounded = result.collider != null && result.normal.y > 0.9f;
     
