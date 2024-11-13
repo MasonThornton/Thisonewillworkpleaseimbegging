@@ -19,9 +19,8 @@ public class PlayerController : MonoBehaviour
     public float airControlForce = 10.0f;
     public float airControlMax = 1.5f;
     public static bool dead = false;
-    public float score_update = 0;
     public static float score = 0;
-
+    List<string> PlayerInventory = new List<string>();
 
 
     Vector2 boxExtents;
@@ -45,6 +44,17 @@ public class PlayerController : MonoBehaviour
             coinSound.Play();
 
         }
+
+        if (coll.gameObject.tag == "key")
+        {
+            PlayerInventory.Add(gameObject.name);
+;
+
+            Debug.Log(PlayerInventory.IndexOf("Key1"));
+            Destroy(coll.gameObject);
+
+
+        }
     }
 
 
@@ -52,6 +62,7 @@ public class PlayerController : MonoBehaviour
     void Update()
 
     {
+    
 
         if (gameObject.tag == "Player" && dead == true)
 
@@ -63,7 +74,7 @@ public class PlayerController : MonoBehaviour
         {
             
         }
-        float blinkVal = Random.Range(0.0f, 200.0f);
+        float blinkVal = Random.Range(0.0f, 900.0f);
         if (blinkVal < 1.0f)
             animator.SetTrigger("blinktrigger");
 

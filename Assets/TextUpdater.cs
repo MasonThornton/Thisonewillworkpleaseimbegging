@@ -9,7 +9,7 @@ using System;
 
 public class TextUpdater : MonoBehaviour
 {
-    public static float score2 = PlayerController.score;
+
 
 
     public TMP_Text messageText;
@@ -24,8 +24,9 @@ public class TextUpdater : MonoBehaviour
         {
             if (gameObject.tag == "text")
             {
-            score2 = PlayerController.score;
-                messageText.SetText(score2.ToString());
+            //grabs the score variable from the PlayerController
+
+                messageText.SetText(PlayerController.score.ToString());
 
 
           

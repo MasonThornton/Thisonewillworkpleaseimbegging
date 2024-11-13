@@ -5,25 +5,28 @@ using UnityEngine;
 
 public class SawBlade : MonoBehaviour
 {
-    // backwards
-    public float Saw1x;
-    // forewards
-    public float Saw2x;
+
+
     public float speed = 3;
     Rigidbody2D rigidBody;
     public bool state = false;
     public float factor = 5;
+    // the position of the left and right of the x
+    float[] sawx = { 0, 1 };
     // Start is called before the first frame update
     void Start()
     {
-        Saw1x = transform.position.x - factor;
-        Saw2x = transform.position.x + factor;
-        rigidBody = GetComponent<Rigidbody2D>();
+
+        sawx[0] = transform.position.x - factor;
+        sawx[1] = transform.position.x + factor;
+            rigidBody = GetComponent<Rigidbody2D>();
     }
+
 
     // Update is called once per frame
     void Update()
     {
+
         rigidBody = GetComponent<Rigidbody2D>();
         rigidBody.rotation += -speed;
        
@@ -38,14 +41,15 @@ public class SawBlade : MonoBehaviour
         }
 
 
-        if (transform.position.x <= Saw1x && state == true)
+        if (transform.position.x <= sawx[0] && state == true)
         {
       
             state = false;
             speed = -speed;
+            
         }
 
-        if (transform.position.x >= Saw2x && state == false)
+        if (transform.position.x >= sawx[1] && state == false)
         {
   
             state = true;

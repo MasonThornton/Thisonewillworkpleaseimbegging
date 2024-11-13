@@ -9,6 +9,7 @@ TagManager:
   - mace
   - mace2
   - ground
+  - key
   layers:
   - Default
   - TransparentFX

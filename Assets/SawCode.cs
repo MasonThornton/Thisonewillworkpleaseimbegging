@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -17,7 +18,7 @@ public class SawCode : MonoBehaviour
     float waitTimer = 2;
     // start
     bool beginWait = false;
-    public float startingx;
+ 
     public float startingy;
     // current
     // variable for telling the thing to start going back
@@ -26,6 +27,7 @@ public class SawCode : MonoBehaviour
     public float returntimer = 2;
     public float disbet;
     public bool inside = false;
+   
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +35,7 @@ public class SawCode : MonoBehaviour
 
         rigidBody = GetComponent<Rigidbody2D>();
         {
-            startingx = transform.position.x;
+ 
             startingy = transform.position.y;
        
 
@@ -47,6 +49,7 @@ public class SawCode : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+ 
 
         rigidBody = GetComponent<Rigidbody2D>();
         disbet = transform.position.y - startingy;
