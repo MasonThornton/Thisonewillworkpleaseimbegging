@@ -107,7 +107,7 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("yspeed", ySpeed);
 
         float h = Input.GetAxis("Horizontal");
-        if (Input.GetKeyDown("f") && h != 0)
+        if (Input.GetKeyDown("f") && h != 0 && SpawnCollider.inside == false)
         {
             plungerAmount += 1;
     Instantiate(Plunger, new Vector2(transform.position.x + 1f * plscale ,transform.position.y), Quaternion.identity);

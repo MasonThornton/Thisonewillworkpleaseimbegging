@@ -7,4 +7,7 @@ Code that helped me learn how to make an object delete itself https://discussion
 code for deactivating a rigibody
 https://discussions.unity.com/t/deactivate-rigidbody/790724
 
-spawning prefab code
+rigidbody constraints code
+https://docs.unity3d.com/ScriptReference/RigidbodyConstraints2D.html
+and
+https://stackoverflow.com/questions/63535438/how-to-use-rigidbody-constraints-in-unity-2d

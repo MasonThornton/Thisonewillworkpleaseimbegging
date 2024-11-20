@@ -23,7 +23,7 @@ public class TextUpdater : MonoBehaviour
             //grabs the score variable from the PlayerController
 
                 messageText.SetText(PlayerController.score.ToString());
-
+            //aaa
 
           
 
