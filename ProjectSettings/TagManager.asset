@@ -11,6 +11,7 @@ TagManager:
   - ground
   - key
   - door
+  - plunger
   layers:
   - Default
   - TransparentFX

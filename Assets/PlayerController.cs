@@ -69,6 +69,8 @@ public class PlayerController : MonoBehaviour
 
         }
 
+
+
         if (coll.gameObject.tag == "key")
         {
 
@@ -80,6 +82,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+   
+        
+  
+   
+        void OnTriggerExit2D(Collider2D coll)
+    {
+        if (coll.gameObject.tag == "plunger")
+        {
+            enablethingy = true;
+
+        }
+
+
+
+    }
+
+  
 
     //Update is called once per frame
     void Update()
@@ -116,7 +135,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown("f") && plscale != 0)
         {
             StartCoroutine(Fire());
-       
+
         }
     }
 
@@ -154,8 +173,8 @@ public class PlayerController : MonoBehaviour
             dashGreatLessChecked = 2;
         }
         // used for positional movement used for my dash code and other things
- 
- 
+
+
         // super complex code that checks if im dashing, whether or not it needs to check for greater or less and if im close to my approximate destination
 
         if (dashDif > 1.1 && dashGreatLessChecked == 1 && isDashing == true || dashDif < 1.1 && isDashing == true && dashGreatLessChecked == 2 || isDashing == true && dashTimeDone == true && pv == 0)
@@ -195,12 +214,12 @@ public class PlayerController : MonoBehaviour
         Vector2 centre = new Vector2(transform.position.x, transform.position.y);
 
         RaycastHit2D result = Physics2D.BoxCast(bottom, hitBoxSize, 0.0f, new Vector3(0.0f, -1.0f), 0.0f, 1 << LayerMask.NameToLayer("Ground"));
-  
+
 
 
         // checks if theres a wall in front of us
 
-        
+
         bool grounded = result.collider != null && result.normal.y > 0.9f;
 
         if (isDashing == true)
@@ -265,20 +284,35 @@ public class PlayerController : MonoBehaviour
     IEnumerator Fire()
     {
         Vector2 hitBoxSize = new Vector2(boxExtents.x * 2.0f, 0.05f);
-        enablethingy = false;
+    
         Vector2 edge = new Vector2(transform.position.x - (boxExtents.x * -plscale), transform.position.y);
         yield return null;
-        RaycastHit2D result2 = Physics2D.BoxCast(edge, hitBoxSize, 0.0f, new Vector3(1.0f * -plscale,0.0f), 0.0f, 1 << LayerMask.NameToLayer("Ground"));
-        bool safeToShoot = result2.collider!= null && result2.normal.x > 0.9f;
-       if (safeToShoot == false && plungerAmount >= 0)
-        {
-              plungerAmount += 1;
-            Instantiate(Plunger, new Vector2(transform.position.x + (1.0f * plscale), transform.position.y), Quaternion.identity);
-            yield return new WaitForSeconds(0.01f);
-            enablethingy = true;
-            Debug.Log(plscale);
+        RaycastHit2D result2 = Physics2D.BoxCast(edge, hitBoxSize, 0.0f, new Vector3(1.0f * -plscale, 0.0f), 0.0f, 1 << LayerMask.NameToLayer("Ground"));
+        bool safeToShoot = result2.collider != null && result2.normal.x > 0.9f;
 
+  
+
+        if (safeToShoot == false && plungerAmount <= 1)
+        {
+            PlayerController.plungerAmount += 2;
+            StartCoroutine(Fire2());
+      
+
+        }
+    
+        IEnumerator Fire2()
+        {
+            yield return new  WaitForSeconds(0.05f);
+            Instantiate(Plunger, new Vector2(transform.position.x + (1.0f * plscale), transform.position.y), Quaternion.identity);
+            enablethingy = false;
         }
     }
 }
+
+
+
+
+
+
+
 

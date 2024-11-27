@@ -12,31 +12,32 @@ public class Plunger : MonoBehaviour
     float velocityconvert;
     float plungertimer;
     private bool MOVE = false;
-    float timer = 0.1f;
+    public bool wallHit = false;
+    Vector2 boxExtents;
     // Start is called before the first frame update
     void Start()
     {
-        rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
-        rigidBody.isKinematic = false;
 
-
+        GetComponent<BoxCollider2D>().isTrigger = false;
+        boxExtents = GetComponent<BoxCollider2D>().bounds.extents;
     }
     public void OnCollisionEnter2D(Collision2D collision)
     {
 
-        if (collision.gameObject.tag == "ground" || collision.gameObject.tag == "door")
+        if (collision.gameObject.tag != "player" && collision.gameObject.tag != "plunger")
 
 
         {
             rigidBody = GetComponent<Rigidbody2D>();
             rigidBody.gravityScale = 0.0f;
-            GetComponent<Rigidbody2D>().fr
+
 
             rigidBody.velocity = new Vector2(0, 0);
-            rigidBody.rotation = 0;
-            rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
-
+       
+            StartCoroutine(Sticky());
+            PlayerController.plungerAmount -= 1;
         }
+
 
 
 
@@ -45,35 +46,60 @@ public class Plunger : MonoBehaviour
 
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        if (PlayerController.enablethingy == false)
+        rigidBody = GetComponent<Rigidbody2D>();
+        if (wallHit == false)
         {
-            GetComponent<BoxCollider2D>().isTrigger = true;
-          
-        }
-        else if (PlayerController.enablethingy == true)
-        {
-            GetComponent<BoxCollider2D>().isTrigger = false;
+            if (PlayerController.plscale == -1)
+            {
+                rigidBody.rotation = 180;
+            }
+            else
+            {
+                rigidBody.rotation = 0;
+            }
         }
 
 
-        if (PlayerController.plungerAmount > 1)
-        {
-            Destroy(gameObject);
-            PlayerController.plungerAmount = 1;
-        }
-        if (MOVE == false)
-        {
+            if (PlayerController.enablethingy == false)
+            {
+                GetComponent<BoxCollider2D>().isTrigger = true;
 
-            rigidBody = GetComponent<Rigidbody2D>();
-            rigidBody.AddForce(new Vector2(Mathf.Clamp(21f + PlayerController.pv,21,34) * PlayerController.plscale, 0.0f), ForceMode2D.Impulse);
-            MOVE = true;
+            }
+            else if (PlayerController.enablethingy == true)
+            {
+                GetComponent<BoxCollider2D>().isTrigger = false;
+            }
+
+            if (PlayerController.plungerAmount < 2)
+            {
+                PlayerController.plungerAmount = 1;
+
+            }
+
+            if (PlayerController.plungerAmount > 2)
+            {
+                Destroy(gameObject);
+                GetComponent<BoxCollider2D>().isTrigger = true;
+                PlayerController.plungerAmount -= 1;
+            }
+            if (MOVE == false)
+            {
+
+                rigidBody = GetComponent<Rigidbody2D>();
+                rigidBody.velocity = new Vector2(Mathf.Clamp(21f + PlayerController.pv, 21, 34) * PlayerController.plscale, 0.0f);
+                MOVE = true;
+            }
+
+        }
+
+        IEnumerator Sticky()
+        {
+            wallHit = true;
+        rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
+        yield return new WaitForSeconds(0.11f);
+            rigidBody.constraints = RigidbodyConstraints2D.FreezePosition;
         }
     }
-
- 
-
-}
-
 
