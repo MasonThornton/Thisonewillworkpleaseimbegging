@@ -30,7 +30,8 @@ public class Plunger : MonoBehaviour
         {
             rigidBody = GetComponent<Rigidbody2D>();
             rigidBody.gravityScale = 0.0f;
-           
+            GetComponent<Rigidbody2D>().fr
+
             rigidBody.velocity = new Vector2(0, 0);
             rigidBody.rotation = 0;
             rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
