@@ -22,9 +22,9 @@ public class MaceCode : MonoBehaviour
     public float startingy;
     // current
     // variable for telling the thing to start going back
-    public bool returntime = false;
+    public bool returnTime = false;
     // timer until it needs to return
-    public float returntimer = 2;
+    public float returnTimer = 2;
     public float disbet;
     public bool inside = false;
    
@@ -54,50 +54,40 @@ public class MaceCode : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         disbet = transform.position.y - startingy;
 
+     
         if (beginWait == true)
-        {
-            waitTimer -= Time.deltaTime;
-            Debug.Log("2");
-        }
-        if (waitTimer < 0)
         {
 
             rigidBody.gravityScale = 1;
-            beginWait = false;
-            waitTimer = 15;
+     
+          
 
 
-            Debug.Log("1");
+
         }
 
-        if (returntime == true)
-        {
-            returntimer -= Time.deltaTime;
-            Debug.Log("AHey");
-        }
-
-        if (returntimer < 0)
-        {
-            returntime = false;
-            Debug.Log("disbet");
-        }
+        
 
 
-        if (returntimer < 0)
+        if (returnTime == true)
         {
             rigidBody.velocity = new Vector2(0, Mathf.Clamp(-disbet, 1, 3));
             rigidBody.gravityScale = 0;
             Debug.Log(disbet);
+            beginWait = false;
         }
 
-        if (transform.position.y >= startingy && returntimer < 0)
+        if (transform.position.y >= startingy && returnTime == true)
         {
-            returntime = false;
+            returnTime = false;
+            beginWait = false;
             rigidBody.velocity = new Vector2(0, 0);
-            returntimer = 2;
-            waitTimer = 2;
+  
             if (inside == true)
-                beginWait = true;
+            {
+                StartCoroutine(startToFall());
+            }
+            
 
 
    
@@ -116,8 +106,8 @@ public class MaceCode : MonoBehaviour
         if (coll.gameObject.tag == "Player")
 
         {
-            beginWait = true;
-            Debug.Log("1");
+            StartCoroutine(startToFall());
+ 
             inside = true;
         }
 
@@ -135,6 +125,7 @@ public class MaceCode : MonoBehaviour
             {
                 inside = false;
             PlayerController.dead = true;
+    
         }
    
             
@@ -150,11 +141,33 @@ public class MaceCode : MonoBehaviour
 
                 if (transform.position.y != startingy)
                 {
-                    returntime = true;
+                   
+                    StartCoroutine(waitTillReturn());
 
+              
                 }
             }
         }
+    }
+    private IEnumerator waitTillReturn()
+    {
+        yield return new WaitForSeconds(returnTimer);
+      
+            returnTime = true;
+
+     
+}
+
+    private IEnumerator startToFall()
+    {
+        yield return new WaitForSeconds(waitTimer);
+        if (inside == true)
+        {
+            beginWait = true;
+        }
+   
+
+
     }
 
 
@@ -165,9 +178,9 @@ public class MaceCode : MonoBehaviour
             if (coll.gameObject.tag == "Player")
 
                 {
-                    waitTimer = 2;
+         
             inside = false;
-                    beginWait = false;
+                  
                 }
 
 

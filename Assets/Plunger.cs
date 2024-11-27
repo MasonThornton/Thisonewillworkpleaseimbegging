@@ -12,13 +12,15 @@ public class Plunger : MonoBehaviour
     float velocityconvert;
     float plungertimer;
     private bool MOVE = false;
+    private bool enablethingy = false;
+    float timer = 0.3f;
     // Start is called before the first frame update
     void Start()
     {
         rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
         rigidBody.isKinematic = false;
+       
 
-    
     }
     public void OnCollisionEnter2D(Collision2D collision)
     {
@@ -29,6 +31,7 @@ public class Plunger : MonoBehaviour
         {
             rigidBody = GetComponent<Rigidbody2D>();
             rigidBody.isKinematic = true;
+           
             rigidBody.velocity = new Vector2(0, 0);
             rigidBody.rotation = 0;
             rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -44,7 +47,16 @@ public class Plunger : MonoBehaviour
 
     void Update()
     {
-
+        if (enablethingy == false)
+        {
+            GetComponent<BoxCollider2D>().isTrigger = true;
+            StartCoroutine(TemporaryDisable());
+        }
+        else if (enablethingy == true)
+        {
+            GetComponent<BoxCollider2D>().isTrigger = false;
+        }
+   
 
         if (PlayerController.plungerAmount > 1)
         {
@@ -55,10 +67,17 @@ public class Plunger : MonoBehaviour
         {
 
             rigidBody = GetComponent<Rigidbody2D>();
-            rigidBody.AddForce(new Vector2(Mathf.Clamp(31 + PlayerController.pv,31,43) * PlayerController.plscale, 0.0f), ForceMode2D.Impulse);
+            rigidBody.AddForce(new Vector2(Mathf.Clamp(51 + PlayerController.pv,51,73) * PlayerController.plscale, 0.0f), ForceMode2D.Impulse);
             MOVE = true;
         }
     }
+
+    IEnumerator TemporaryDisable()
+    {
+        yield return new WaitForSeconds(timer);
+        enablethingy = true;
+    }
+
 }
 
 

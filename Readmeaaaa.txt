@@ -11,3 +11,9 @@ rigidbody constraints code
 https://docs.unity3d.com/ScriptReference/RigidbodyConstraints2D.html
 and
 https://stackoverflow.com/questions/63535438/how-to-use-rigidbody-constraints-in-unity-2d
+
+understanding physics2d.boxcast 
+https://docs.unity3d.com/ScriptReference/Physics2D.BoxCast.html
+
+Enabling and disabling box collider 2d 
+    GetComponent<BoxCollider2D>().enabled = false;
