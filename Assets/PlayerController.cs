@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     public GameObject Plunger;
     public static float plungerAmount = 0;
     public bool safeToShoot = false;
+    public static bool enablethingy = false;
 
 
 
@@ -105,6 +106,7 @@ public class PlayerController : MonoBehaviour
 
         if (rigidBody.velocity.x * transform.localScale.x < 0.0f)
             transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        plscale = Mathf.Clamp(Mathf.RoundToInt(transform.localScale.x), -1, 1);
         float xSpeed = Mathf.Abs(rigidBody.velocity.x);
         animator.SetFloat("xspeed", xSpeed);
         float ySpeed = Mathf.Abs(rigidBody.velocity.y);
@@ -152,10 +154,8 @@ public class PlayerController : MonoBehaviour
             dashGreatLessChecked = 2;
         }
         // used for positional movement used for my dash code and other things
-        if (h > 0 && isDashing == false || h < 0 && isDashing == false)
-        {
-            plscale = h;
-        }
+ 
+ 
         // super complex code that checks if im dashing, whether or not it needs to check for greater or less and if im close to my approximate destination
 
         if (dashDif > 1.1 && dashGreatLessChecked == 1 && isDashing == true || dashDif < 1.1 && isDashing == true && dashGreatLessChecked == 2 || isDashing == true && dashTimeDone == true && pv == 0)
@@ -265,16 +265,18 @@ public class PlayerController : MonoBehaviour
     IEnumerator Fire()
     {
         Vector2 hitBoxSize = new Vector2(boxExtents.x * 2.0f, 0.05f);
-
-        Vector2 edge = new Vector2(transform.position.x - boxExtents.x, transform.position.y);
+        enablethingy = false;
+        Vector2 edge = new Vector2(transform.position.x - (boxExtents.x * -plscale), transform.position.y);
         yield return null;
-        RaycastHit2D result2 = Physics2D.BoxCast(edge, hitBoxSize, 0.0f, new Vector3(2.0f * -plscale, 0.0f), 0.0f, 1 << LayerMask.NameToLayer("Ground"));
+        RaycastHit2D result2 = Physics2D.BoxCast(edge, hitBoxSize, 0.0f, new Vector3(1.0f * -plscale,0.0f), 0.0f, 1 << LayerMask.NameToLayer("Ground"));
         bool safeToShoot = result2.collider!= null && result2.normal.x > 0.9f;
-       if (safeToShoot == false)
+       if (safeToShoot == false && plungerAmount >= 0)
         {
               plungerAmount += 1;
-            Instantiate(Plunger, new Vector2(transform.position.x + 2f * plscale, transform.position.y), Quaternion.identity);
-
+            Instantiate(Plunger, new Vector2(transform.position.x + (1.0f * plscale), transform.position.y), Quaternion.identity);
+            yield return new WaitForSeconds(0.01f);
+            enablethingy = true;
+            Debug.Log(plscale);
 
         }
     }
