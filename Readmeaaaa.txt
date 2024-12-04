@@ -17,3 +17,8 @@ https://docs.unity3d.com/ScriptReference/Physics2D.BoxCast.html
 
 Enabling and disabling box collider 2d 
     GetComponent<BoxCollider2D>().enabled = false;
+
+where I learnt how to ignore collisions
+https://discussions.unity.com/t/enable-disable-layer-collision-matrix-thru-script/214788
+and
+https://docs.unity3d.com/560/Documentation/ScriptReference/GameObject-layer.html

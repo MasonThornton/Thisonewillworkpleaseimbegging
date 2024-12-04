@@ -5,25 +5,25 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Plunger : MonoBehaviour
 
 {
     Rigidbody2D rigidBody;
-    float velocityconvert;
-    float plungertimer;
+
+
     private bool MOVE = false;
-    public bool wallHit = false;
-    float directionplunger;
+
     bool collided = false;
 
-    Vector2 boxExtents;
+
     // Start is called before the first frame update
     void Start()
     {
 
-        GetComponent<BoxCollider2D>().isTrigger = true;
-        boxExtents = GetComponent<BoxCollider2D>().bounds.extents;
+      
+   
     }
     public void OnCollisionEnter2D(Collision2D collision)
     {
@@ -37,11 +37,23 @@ public class Plunger : MonoBehaviour
 
 
             rigidBody.velocity = new Vector2(0, 0);
-       
-           
-            rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
 
+            collided = true;
+            rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
+      
         }
+
+        // fix this so it stops working when player inside
+        if (collision.gameObject.tag == "player" && collided == true)
+        {
+            gameObject.layer = 1;
+        }
+        else
+        {
+            gameObject.layer = 3;
+        }
+
+
 
 
 
@@ -59,9 +71,8 @@ public class Plunger : MonoBehaviour
 
 
         rigidBody = GetComponent<Rigidbody2D>();
-        if (wallHit == false)
-        {
-            if (PlayerController.plscale == -1)
+      
+            if (PlayerController.plungerRotation < 0)
             {
                 rigidBody.rotation = 180;
             }
@@ -69,10 +80,10 @@ public class Plunger : MonoBehaviour
             {
                 rigidBody.rotation = 0;
             }
-        }
+  
 
       
-            directionplunger = PlayerController.plscale;
+
    
        
 
@@ -81,20 +92,11 @@ public class Plunger : MonoBehaviour
         if (PlayerController.shooting == true && collided == true)
         {
             PlayerController.fire = true;
-            GameObject.Destroy(gameObject);
+           Destroy(gameObject);
 
-            StartCoroutine(Die());
+           
         }
-
-        if (PlayerController.enablethingy == false)
-        {
-            GetComponent<BoxCollider2D>().isTrigger = true;
-
-        }
-        else if (PlayerController.enablethingy == true)
-        {
-            GetComponent<BoxCollider2D>().isTrigger = false;
-        }
+     
          
         if (MOVE == false)
             {
@@ -108,11 +110,6 @@ public class Plunger : MonoBehaviour
 
     
 
-    IEnumerator Die()
-    {
-        yield return new WaitForSeconds(0.01f);
-   
 
-    }
 }
 

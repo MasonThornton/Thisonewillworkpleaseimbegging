@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
     // firing variables
     public static bool fire = true;
     public static bool shooting = false;
-   public static bool enablethingy = false;
+   public static float plungerRotation = 0;
 
 
 
@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         boxExtents = GetComponent<BoxCollider2D>().bounds.extents;
         animator = GetComponent<Animator>();
-
+      
     }
 
     void OnTriggerEnter2D(Collider2D coll)
@@ -85,23 +85,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-   
-        
-  
-   
-        void OnTriggerExit2D(Collider2D coll)
-    {
-        if (coll.gameObject.tag == "plunger")
-        {
-            enablethingy = true;
-
-        }
 
 
 
-    }
 
-  
+
+
 
     //Update is called once per frame
     void Update()
@@ -122,21 +111,20 @@ public class PlayerController : MonoBehaviour
         }
         float blinkVal = Random.Range(0.0f, 900.0f);
         if (blinkVal < 1.0f)
+        {
             animator.SetTrigger("blinktrigger");
-
+        }
 
         float h = Input.GetAxis("Horizontal");
-        if (rigidBody.velocity.x * transform.localScale.x < 0.0f)
-            if (h < 0)
-                {
+        if (Input.GetAxis("Horizontal") * transform.localScale.x < 0.0f)
+        {
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        }
+
 
         
-            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-            }
-        else if (h > 0)
-            {
-                transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-            }
+
+  
         plscale = Mathf.Clamp(Mathf.RoundToInt(transform.localScale.x), -1, 1);
         float xSpeed = Mathf.Abs(rigidBody.velocity.x);
         animator.SetFloat("xspeed", xSpeed);
@@ -226,14 +214,14 @@ public class PlayerController : MonoBehaviour
         Vector2 centre = new Vector2(transform.position.x, transform.position.y);
 
         RaycastHit2D result = Physics2D.BoxCast(bottom, hitBoxSize, 0.0f, new Vector3(0.0f, -1.0f), 0.0f, 1 << LayerMask.NameToLayer("Ground"));
-
+ 
 
 
         // checks if theres a wall in front of us
 
 
         bool grounded = result.collider != null && result.normal.y > 0.9f;
-
+    
         if (isDashing == true)
         {
             rigidBody.velocity = new Vector2(-dashDif + (43 * plscale), 0);
@@ -297,7 +285,7 @@ public class PlayerController : MonoBehaviour
             Instantiate(Plunger, new Vector2(transform.position.x + (1.0f * plscale), transform.position.y), Quaternion.identity);
             fire = false;
             shooting = false;
-        
+            plungerRotation = plscale;
         }
     }
 
@@ -316,7 +304,7 @@ public class PlayerController : MonoBehaviour
         if (safeToShoot == false)
         {
             shooting = true;
-            enablethingy = false;
+           
 
         }
 
