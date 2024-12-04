@@ -38,8 +38,8 @@ public class Plunger : MonoBehaviour
 
             rigidBody.velocity = new Vector2(0, 0);
        
-            StartCoroutine(Sticky());
-     
+           
+            rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
 
         }
 
@@ -53,10 +53,11 @@ public class Plunger : MonoBehaviour
 
     void FixedUpdate()
     {
+      
 
-     
 
- 
+
+
         rigidBody = GetComponent<Rigidbody2D>();
         if (wallHit == false)
         {
@@ -105,14 +106,7 @@ public class Plunger : MonoBehaviour
 
         }
 
-        IEnumerator Sticky()
-        {
-            wallHit = true;
-        rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
-        yield return new WaitForSeconds(0.11f);
-            rigidBody.constraints = RigidbodyConstraints2D.FreezePosition;
-        collided = true;
-        }
+    
 
     IEnumerator Die()
     {

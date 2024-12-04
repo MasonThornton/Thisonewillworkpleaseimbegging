@@ -125,16 +125,25 @@ public class PlayerController : MonoBehaviour
             animator.SetTrigger("blinktrigger");
 
 
-
+        float h = Input.GetAxis("Horizontal");
         if (rigidBody.velocity.x * transform.localScale.x < 0.0f)
+            if (h < 0)
+                {
+
+        
             transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+            }
+        else if (h > 0)
+            {
+                transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+            }
         plscale = Mathf.Clamp(Mathf.RoundToInt(transform.localScale.x), -1, 1);
         float xSpeed = Mathf.Abs(rigidBody.velocity.x);
         animator.SetFloat("xspeed", xSpeed);
         float ySpeed = Mathf.Abs(rigidBody.velocity.y);
         animator.SetFloat("yspeed", ySpeed);
 
-        float h = Input.GetAxis("Horizontal");
+      
         if (Input.GetKeyDown("f") && plscale != 0)
         {
             StartCoroutine(Fire());
