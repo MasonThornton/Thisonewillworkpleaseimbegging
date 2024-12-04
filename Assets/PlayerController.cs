@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     public bool isDashing = false;
     public float dashTimer = 0.1f;
     public bool dashTimeDone = false;
-
+ 
     public float dashDist = 25;
     public float dashGreatLessChecked = 0;
     public float dashDif;
@@ -39,9 +39,12 @@ public class PlayerController : MonoBehaviour
     public static List<float> PlayerInventory = new List<float>();
     public bool running = false;
     public GameObject Plunger;
-    public static float plungerAmount = 0;
+
     public bool safeToShoot = false;
-    public static bool enablethingy = false;
+    // firing variables
+    public static bool fire = true;
+    public static bool shooting = false;
+   public static bool enablethingy = false;
 
 
 
@@ -247,6 +250,7 @@ public class PlayerController : MonoBehaviour
                 rigidBody.AddForce(new Vector2(h * airControlForce, 0));
         }
 
+        // input code for dashing
         if (Input.GetKey("left ctrl") == true && h != 0 && running == false && isDashing == false)
         {
             isDashing = true;
@@ -278,6 +282,14 @@ public class PlayerController : MonoBehaviour
             }
 
         }
+
+        if (fire == true && shooting == true)
+        {
+            Instantiate(Plunger, new Vector2(transform.position.x + (1.0f * plscale), transform.position.y), Quaternion.identity);
+            fire = false;
+            shooting = false;
+        
+        }
     }
 
     // checks if we can shoot an object forward
@@ -292,20 +304,15 @@ public class PlayerController : MonoBehaviour
 
   
 
-        if (safeToShoot == false && plungerAmount <= 1)
+        if (safeToShoot == false)
         {
-            PlayerController.plungerAmount += 2;
-            StartCoroutine(Fire2());
-      
+            shooting = true;
+            enablethingy = false;
 
         }
-    
-        IEnumerator Fire2()
-        {
-            yield return new  WaitForSeconds(0.05f);
-            Instantiate(Plunger, new Vector2(transform.position.x + (1.0f * plscale), transform.position.y), Quaternion.identity);
-            enablethingy = false;
-        }
+
+        
+     
     }
 }
 
