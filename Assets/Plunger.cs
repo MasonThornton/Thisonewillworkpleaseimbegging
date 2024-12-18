@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
@@ -12,10 +13,12 @@ public class Plunger : MonoBehaviour
 {
     Rigidbody2D rigidBody;
 
-
+    SpriteRenderer SpriteRenderer;
     private bool MOVE = false;
-
+    Vector2 boxExtents;
     bool collided = false;
+
+
 
 
     // Start is called before the first frame update
@@ -46,13 +49,14 @@ public class Plunger : MonoBehaviour
         // fix this so it stops working when player inside
         if (collision.gameObject.tag == "player" && collided == true)
         {
-            gameObject.layer = 1;
+            gameObject.layer = 6;
         }
-        else
+        else if (collision.gameObject.tag != "player")
         {
             gameObject.layer = 3;
         }
 
+        
 
 
 
@@ -71,23 +75,43 @@ public class Plunger : MonoBehaviour
 
 
         rigidBody = GetComponent<Rigidbody2D>();
-      
-            if (PlayerController.plungerRotation < 0)
+        SpriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (PlayerController.plungerRotation < 0 )
             {
                 rigidBody.rotation = 180;
-            }
+            // makes it visible after rotating it
+            SpriteRenderer.color = Color.white;
+        }
             else
             {
                 rigidBody.rotation = 0;
+            // makes it visible after rotating it
+            SpriteRenderer.color = Color.white;
+        }
+
+
+
+
+
+
+        if (collided == true)
+        {
+            Vector2 hitBoxSize = new Vector2(boxExtents.x * 2.0f, 0.05f);
+
+            Vector2 edge = new Vector2(transform.position.x + -PlayerController.plungerRotation, transform.position.y);
+
+            RaycastHit2D result = Physics2D.BoxCast(edge, hitBoxSize, 0.0f, new Vector3(1222222222222222.0f * -PlayerController.plungerRotation, 0.0f), 0.0f, 1 << LayerMask.NameToLayer("Ground"));
+
+            bool wall = result.collider != null && result.normal.x > 0.9f;
+
+            if (wall == false)
+            {
+                PlayerController.fire = true;
+                Debug.Log("hi")
+
             }
-  
-
-      
-
-   
-       
-
-     
+        }
 
         if (PlayerController.shooting == true && collided == true)
         {
@@ -97,7 +121,8 @@ public class Plunger : MonoBehaviour
            
         }
      
-         
+
+
         if (MOVE == false)
             {
 

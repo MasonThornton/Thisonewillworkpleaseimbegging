@@ -22,3 +22,6 @@ where I learnt how to ignore collisions
 https://discussions.unity.com/t/enable-disable-layer-collision-matrix-thru-script/214788
 and
 https://docs.unity3d.com/560/Documentation/ScriptReference/GameObject-layer.html
+
+changing object code using colour was learnt from
+https://docs.unity3d.com/6000.0/Documentation/ScriptReference/SpriteRenderer.html

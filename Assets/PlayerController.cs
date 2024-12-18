@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     public AudioSource coinSound;
     Rigidbody2D rigidBody;
     float speed = 7.0f;
-    public float jumpForce = 8.0f;
+    public float jumpForce = 12.0f;
     public float dashForce = 100000.0f;
     public static float pv;
     public bool isDashing = false;
@@ -211,7 +211,7 @@ public class PlayerController : MonoBehaviour
 
         Vector2 hitBoxSize = new Vector2(boxExtents.x * 2.0f, 0.05f);
 
-        Vector2 centre = new Vector2(transform.position.x, transform.position.y);
+      
 
         RaycastHit2D result = Physics2D.BoxCast(bottom, hitBoxSize, 0.0f, new Vector3(0.0f, -1.0f), 0.0f, 1 << LayerMask.NameToLayer("Ground"));
  
@@ -292,11 +292,11 @@ public class PlayerController : MonoBehaviour
     // checks if we can shoot an object forward
     IEnumerator Fire()
     {
-        Vector2 hitBoxSize = new Vector2(boxExtents.x * 2.0f, 0.05f);
+        Vector2 hitBoxSize = new Vector2(boxExtents.x * 4.0f, 0.05f);
     
         Vector2 edge = new Vector2(transform.position.x - (boxExtents.x * -plscale), transform.position.y);
         yield return null;
-        RaycastHit2D result2 = Physics2D.BoxCast(edge, hitBoxSize, 0.0f, new Vector3(1.0f * -plscale, 0.0f), 0.0f, 1 << LayerMask.NameToLayer("Ground"));
+        RaycastHit2D result2 = Physics2D.BoxCast(edge, hitBoxSize, 0.0f, new Vector3(7.0f * -plscale, 0.0f), 0.0f, 1 << LayerMask.NameToLayer("Ground"));
         bool safeToShoot = result2.collider != null && result2.normal.x > 0.9f;
 
   
