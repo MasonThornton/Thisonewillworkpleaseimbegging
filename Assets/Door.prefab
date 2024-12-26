@@ -145,6 +145,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Identity: 0
+  Plunged: 0
+  Plunger: {fileID: -9199113729878033451, guid: aff913f2c895046419c936db00b4b90e, type: 3}
 --- !u!50 &4208284192017261122
 Rigidbody2D:
   serializedVersion: 4

@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     public bool isDashing = false;
     public float dashTimer = 0.1f;
     public bool dashTimeDone = false;
- 
+
     public float dashDist = 25;
     public float dashGreatLessChecked = 0;
     public float dashDif;
@@ -39,12 +39,13 @@ public class PlayerController : MonoBehaviour
     public static List<float> PlayerInventory = new List<float>();
     public bool running = false;
     public GameObject Plunger;
-
+    public Plunger Pl;
     public bool safeToShoot = false;
     // firing variables
     public static bool fire = true;
     public static bool shooting = false;
-   public static float plungerRotation = 0;
+    public static float plungerRotation = 0;
+    public static bool PlungerRemove = false;
 
 
 
@@ -58,7 +59,7 @@ public class PlayerController : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         boxExtents = GetComponent<BoxCollider2D>().bounds.extents;
         animator = GetComponent<Animator>();
-      
+
     }
 
     void OnTriggerEnter2D(Collider2D coll)
@@ -86,8 +87,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-
-
+   
 
 
 
@@ -96,6 +96,7 @@ public class PlayerController : MonoBehaviour
     void Update()
 
     {
+
         Vector3 pv = rigidBody.velocity;
         py = transform.position.y;
 
@@ -105,6 +106,7 @@ public class PlayerController : MonoBehaviour
         {
 
             Destroy(gameObject);
+         Pl.DestroySelf();
         }
         {
 
@@ -308,9 +310,15 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        
-     
+   
+
+}
+    public void DestroySelf()
+    {
+        PlungerRemove = true;
+        PlungerRemove = false;
     }
+
 }
 
 

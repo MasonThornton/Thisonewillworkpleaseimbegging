@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 490253039396595613}
   m_Layer: 6
   m_Name: Plunger(Clone)
-  m_TagString: Untagged
+  m_TagString: plunger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
