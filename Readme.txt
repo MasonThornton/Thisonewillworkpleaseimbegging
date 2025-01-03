@@ -26,3 +26,14 @@ https://docs.unity3d.com/560/Documentation/ScriptReference/GameObject-layer.html
 changing object code using colour was learnt from
 https://docs.unity3d.com/6000.0/Documentation/ScriptReference/SpriteRenderer.html
 
+Learnt rigidbody code from here
+https://stackoverflow.com/questions/41264316/setting-rigidbody2d-body-type-to-static-in-code
+
+Scene manager learnt from here
+https://docs.unity3d.com/ScriptReference/SceneManagement.SceneManager.LoadScene.html
+
+Unity Game Assets
+https://assetstore.unity.com/packages/2d/environments/free-platform-game-assets-85838
+
+Raycasting learnt from
+https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Physics.Raycast.html

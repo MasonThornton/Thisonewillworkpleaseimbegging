@@ -12,6 +12,7 @@ TagManager:
   - key
   - door
   - plunger
+  - spike
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - UI
   - Plunger
   - Player
-  - 
+  - Mace
   - 
   - 
   - 
