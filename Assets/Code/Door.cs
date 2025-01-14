@@ -30,6 +30,7 @@ public class Door : MonoBehaviour
         {
             if (Plunged == true)
             {
+                //if there is a plunger connected to the door it breaks if the door is destroyed
                 PlayerController.DestroySelf();
 
             }
