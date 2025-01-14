@@ -1076,7 +1076,7 @@ PrefabInstance:
     - target: {fileID: 3660751023787846716, guid: 44d4318db18ee4744934cc746be8437e, type: 3}
       propertyPath: m_text
       value: After you collect the plunger you unlock the ability to shoot Plungers.
-        Press f to shootr
+        Press f to shoot
       objectReference: {fileID: 0}
     - target: {fileID: 3660751023787846716, guid: 44d4318db18ee4744934cc746be8437e, type: 3}
       propertyPath: m_margin.z

@@ -38,7 +38,7 @@ public class SawBlade : MonoBehaviour
 
        
 
-
+        //this code essentially detects a position based on factor eg 25 x away then if the position is greater than or lesser than this value depending on the state of the saw, the saw will change position
         if (transform.position.x <= sawx[0] && state == true)
         {
       

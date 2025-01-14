@@ -72,7 +72,7 @@ public class MaceCode : MonoBehaviour
 
         
 
-
+        //code that moves the mace back up after it hit the floor
         if (returnTime == true)
         {
             rigidBody.velocity = new Vector2(0, Mathf.Clamp(-disbet, 1, 3));
@@ -81,13 +81,14 @@ public class MaceCode : MonoBehaviour
             beginWait = false;
         }
 
+        //after you are done reset everything
         if (transform.position.y >= startingy && returnTime == true)
         {
             returnTime = false;
             beginWait = false;
             rigidBody.velocity = new Vector2(0, 0);
             rigidBody.bodyType = RigidbodyType2D.Static;
-  
+  //if the player continues to be inside then begin to fall immedietly
             if (inside == true)
             {
                 StartCoroutine(startToFall());
@@ -106,7 +107,7 @@ public class MaceCode : MonoBehaviour
 
 
 
-
+        //begins to fall if player is inside the collision box
 
         if (coll.gameObject.tag == "Player")
 
@@ -120,7 +121,7 @@ public class MaceCode : MonoBehaviour
 
     }
 
-
+    //kills the player
     public void OnCollisionEnter2D(Collision2D collision)
     {
    
@@ -136,7 +137,7 @@ public class MaceCode : MonoBehaviour
             
 
 
-
+        // if it hits the floor then it pauses then starts to go back up
 
         if (collision.gameObject.tag == "ground")
         {

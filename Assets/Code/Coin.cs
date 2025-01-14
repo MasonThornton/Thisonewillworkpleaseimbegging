@@ -11,7 +11,7 @@ public class Coin : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D coll)
     {
-   
+   //when the player touches the coin it increments score plays a sound and destroys itself
         if (coll.gameObject.tag == "Player" && CanTouchThis == true)
         {
 
