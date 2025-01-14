@@ -46,7 +46,7 @@ public class MainManager : MonoBehaviour
    
 
     }
-
+    // defines all the audio
     public void CoinSound()
     {
 
