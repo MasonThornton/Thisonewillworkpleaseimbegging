@@ -13,6 +13,7 @@ TagManager:
   - door
   - plunger
   - spike
+  - boot
   layers:
   - Default
   - TransparentFX

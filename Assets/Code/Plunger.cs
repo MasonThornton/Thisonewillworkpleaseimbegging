@@ -43,7 +43,7 @@ public class Plunger : MonoBehaviour
 
             collided = true;
             rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
-
+          
         }
 
         // fix this so it stops working when player inside
@@ -59,6 +59,7 @@ public class Plunger : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("Mace"))
         {
             PlayerController.fire = true;
+            MainManager.Instance.BreakSound();
             Destroy(gameObject);
 
 

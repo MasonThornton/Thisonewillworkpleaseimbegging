@@ -10,6 +10,7 @@ public class SawBlade : MonoBehaviour
     public float speed = 3;
     Rigidbody2D rigidBody;
     public bool state = false;
+    // how far the the saw blade will go out
     public float factor = 5;
     // the position of the left and right of the x
     float[] sawx = { 0, 1 };

@@ -14,19 +14,11 @@ public class TextUpdater : MonoBehaviour
 
 
      TMP_Text messageText;
-    public float score;
-    public float maxscore;
 
     public void Start()
     {
         messageText = GetComponent<TMP_Text>();
-        if (PlayerController.dead == true)
-        {
-            score = maxscore;
-        }
-        else { maxscore = score; }
-     
-
+       
     }
 
     void Update() // Or other method
@@ -34,7 +26,7 @@ public class TextUpdater : MonoBehaviour
        
             //grabs the score variable from the PlayerController
 
-                messageText.SetText("score:" + score.ToString());
+                messageText.SetText("score:" + MainManager.Instance.currentScore.ToString());
     
    
 

@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
 {
     Animator animator;
     public AudioSource coinSound;
+    public AudioSource GameOver;
     Rigidbody2D rigidBody;
     float speed = 7.0f;
     private float jumpForce = 17.0f;
@@ -37,6 +38,8 @@ public class PlayerController : MonoBehaviour
    
     public static float py;
     public static float plscale = -1;
+    // used for when the character is dashing to stop changing movement while airborne
+    public float plscaleNotDashing;
     public static List<float> PlayerInventory = new List<float>();
     public bool running = false;
     public GameObject Plunger;
@@ -47,6 +50,7 @@ public class PlayerController : MonoBehaviour
     public static bool shooting = false;
     public static float plungerRotation = 0;
     public static bool PlungerRemove = false;
+    
     // used for coyote time
    bool coyoteground = false;
  bool grounded = false;
@@ -54,7 +58,8 @@ public class PlayerController : MonoBehaviour
 
     Vector2 boxExtents;
     public TMP_Text messageText;
-    public TextUpdater textupdater;
+
+
 
     //use this for initialization
     void Start()
@@ -63,38 +68,12 @@ public class PlayerController : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         boxExtents = GetComponent<BoxCollider2D>().bounds.extents;
         animator = GetComponent<Animator>();
-       
-
-
+        gameObject.SetActive(true);
+        dead = false;
+        PlayerInventory.Clear();
+   
     }
 
-    void OnTriggerEnter2D(Collider2D coll)
-    {
-        if (coll.gameObject.tag == "coin")
-        {
-            Destroy(coll.gameObject);
-
-
-
-
-            textupdater.score += 100;
-
-        }
-
-     
-
-
-
-        if (coll.gameObject.tag == "key")
-        {
-
-
-            Destroy(coll.gameObject);
-
-
-
-        }
-    }
 
 
    
@@ -107,7 +86,7 @@ public class PlayerController : MonoBehaviour
 
     {
 
-        Vector3 pv = rigidBody.velocity;
+           Vector3 pv = rigidBody.velocity;
         py = transform.position.y;
 
         if (gameObject.tag == "Player" && dead == true)
@@ -116,11 +95,9 @@ public class PlayerController : MonoBehaviour
         {
             DestroySelf();
             gameObject.SetActive(false);
-
+     
         }
-        {
-
-        }
+      
         float blinkVal = Random.Range(0.0f, 1900.0f);
         if (blinkVal < 1.0f)
         {
@@ -138,13 +115,17 @@ public class PlayerController : MonoBehaviour
 
   
         plscale = Mathf.Clamp(Mathf.RoundToInt(transform.localScale.x), -1, 1);
+        if (isDashing == false)
+        {
+            plscaleNotDashing = plscale;
+        }
         float xSpeed = Mathf.Abs(rigidBody.velocity.x);
         animator.SetFloat("xspeed", xSpeed);
         float ySpeed = Mathf.Abs(rigidBody.velocity.y);
         animator.SetFloat("yspeed", ySpeed);
 
       
-        if (Input.GetKeyDown("f") && plscale != 0)
+        if (Input.GetKeyDown("f") && plscale != 0 && MainManager.Instance.HasPlunger == true)
         {
             StartCoroutine(Fire());
 
@@ -160,9 +141,9 @@ public class PlayerController : MonoBehaviour
 
 
         {
-            
 
-            
+
+            MainManager.Instance.LandSound();
             dashTimeDone = true;
           
             
@@ -175,6 +156,8 @@ public class PlayerController : MonoBehaviour
             dead = true;
 
         }
+
+
     }
 
     public void OnCollisionExit2D(Collision2D collision)
@@ -230,7 +213,7 @@ public class PlayerController : MonoBehaviour
                 running = true;
                 rigidBody.velocity = new Vector2(0, 0);
                 dashTimeDone = false;
-            Debug.Log("hieaaaa");
+ 
 
         }
 
@@ -275,15 +258,16 @@ public class PlayerController : MonoBehaviour
             if (isDashing == true)
             {
 
-                rigidBody.velocity = new Vector2(-dashDif + (43 * plscale), 0);
+                rigidBody.velocity = new Vector2(-dashDif + (43 * plscaleNotDashing), 0);
             }
 
          
 
 
-
+            //ensures player is grounded
             else if (grounded == true)
             {
+            //lets player jump
                 if (Input.GetAxis("Jump") > 0.0f && isDashing == false)
                 {
                     // stops us from infinitely jumping due to coyote time
@@ -291,14 +275,17 @@ public class PlayerController : MonoBehaviour
                     grounded = false;
 
                     rigidBody.AddForce(new Vector2(0.0f, jumpForce), ForceMode2D.Impulse);
+                MainManager.Instance.JumpSound();
 
 
-                }
+            }
 
                 else if (isDashing == false)
                 {
+                //walk movement
                     rigidBody.velocity = new Vector2(speed * h, rigidBody.velocity.y);
-                }
+
+            }
             }
             else if (isDashing == false)
             {
@@ -311,13 +298,16 @@ public class PlayerController : MonoBehaviour
         }
 
             // input code for dashing
-            if (Input.GetKey("left ctrl") == true && h != 0 && running == false && isDashing == false)
+            if (Input.GetKey("left ctrl") == true && h != 0 && running == false && isDashing == false && MainManager.Instance.HasDash == true)
             {
                 isDashing = true;
                 running = false;
+            //maximum distance
                 dashDist = transform.position.x + (10 * plscale);
-            }
-            else if (Input.GetKey("left ctrl") && h != 0 && running == true && isDashing == false && grounded == true)
+            MainManager.Instance.JumpSound();
+
+        }
+        else if (Input.GetKey("left ctrl") && h != 0 && running == true && isDashing == false && grounded == true)
             {
                 speed = 13;
          

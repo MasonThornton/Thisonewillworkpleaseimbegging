@@ -148,8 +148,9 @@ public class MaceCode : MonoBehaviour
                 {
                    
                     StartCoroutine(waitTillReturn());
+                    MainManager.Instance.ThudSound();
 
-              
+
                 }
             }
         }

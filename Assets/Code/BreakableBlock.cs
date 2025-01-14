@@ -23,8 +23,11 @@ public class BreakableBlock : MonoBehaviour
             if (Plunged == true)
             {
                 PlayerController.DestroySelf();
+
             }
+            MainManager.Instance.BreakSound();
             Destroy(gameObject);
+
            
         }
         if (collision.gameObject.tag == "Player" && PlayerController.py < transform.position.y)

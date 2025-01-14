@@ -11,13 +11,16 @@ public class Door : MonoBehaviour
     public float Identity;
       Rigidbody2D rigidBody;
     public bool Plunged = false;
+    private bool DoorOpening = false;
     public PlayerController PlayerController;
+    SpriteRenderer spriteRenderer;
     // Start is called before the first frame update
   
 
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
     
     public void OnCollisionEnter2D(Collision2D collision)
@@ -30,8 +33,8 @@ public class Door : MonoBehaviour
                 PlayerController.DestroySelf();
 
             }
-            Destroy(gameObject);
-          
+            DoorOpening = true;
+           
 
         }
 
@@ -40,18 +43,31 @@ public class Door : MonoBehaviour
 
       
             Plunged = true;
-        
+  
         }
     }
     
-    private void Update()
+    private void Update() 
     {
        if (PlayerController.fire == true)
             {
             Plunged = false;
         }
+       if (DoorOpening == true)
+        {
+            MainManager.Instance.DoorSound();
+            spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, spriteRenderer.color.a - (5.75f * Time.deltaTime));
+        }
+       if (spriteRenderer.color.a <= 0)
+        {
+            Destroy(gameObject);
 
-  
+        }
+
+
+
+
+
 
     }
 }

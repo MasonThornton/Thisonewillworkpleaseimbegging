@@ -37,3 +37,40 @@ https://assetstore.unity.com/packages/2d/environments/free-platform-game-assets-
 
 Raycasting learnt from
 https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Physics.Raycast.html
+
+Data Persistence was learnt rom
+https://learn.unity.com/tutorial/implement-data-persistence-between-scenes#634f8281edbc2a65c86270c7
+
+Jumping Sound:
+https://freesound.org/people/cabled_mess/sounds/350901/
+
+Audio clips and Playone shot learnt from
+https://support.unity.com/hc/en-us/articles/206116386-How-do-I-play-multiple-Audio-Sources-from-one-GameObject#:~:text=You%20can%20attach%20several%20Audio,script%20to%20the%20Audio%20Source.
+
+Randomness:
+https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Random.Range.html
+
+Dash Sound:
+https://freesound.org/people/timgormly/sounds/170145/
+
+Item Pickup sound:
+https://freesound.org/people/Taira%20Komori/sounds/213424/
+
+Thud Sound:
+https://freesound.org/people/JWMalahy/sounds/146981/
+
+Break Sound:
+https://freesound.org/people/qubodup/sounds/332056/
+
+Saw:
+https://freesound.org/people/DrinkingWindGames/sounds/463735/
+
+Door:
+https://freesound.org/people/AUDACITIER/sounds/632328/
+
+Game Over:
+https://freesound.org/people/wolderado/sounds/415096/
+
+Landing Sound:
+https://freesound.org/people/DWOBoyle/sounds/458278/
+
