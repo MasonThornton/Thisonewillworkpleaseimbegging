@@ -75,7 +75,7 @@ public class MaceCode : MonoBehaviour
         //code that moves the mace back up after it hit the floor
         if (returnTime == true)
         {
-            rigidBody.velocity = new Vector2(0, Mathf.Clamp(-disbet, 1, 3));
+            rigidBody.linearVelocity = new Vector2(0, Mathf.Clamp(-disbet, 1, 3));
             rigidBody.gravityScale = 0;
         
             beginWait = false;
@@ -86,7 +86,7 @@ public class MaceCode : MonoBehaviour
         {
             returnTime = false;
             beginWait = false;
-            rigidBody.velocity = new Vector2(0, 0);
+            rigidBody.linearVelocity = new Vector2(0, 0);
             rigidBody.bodyType = RigidbodyType2D.Static;
   //if the player continues to be inside then begin to fall immedietly
             if (inside == true)

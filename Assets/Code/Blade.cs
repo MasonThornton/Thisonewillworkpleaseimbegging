@@ -33,7 +33,7 @@ public class SawBlade : MonoBehaviour
        
 
     
-            rigidBody.velocity = new Vector2(speed, 0);
+            rigidBody.linearVelocity = new Vector2(speed, 0);
 
 
        

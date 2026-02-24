@@ -39,7 +39,7 @@ public class Plunger : MonoBehaviour
             rigidBody.gravityScale = 0.0f;
 
 
-            rigidBody.velocity = new Vector2(0, 0);
+            rigidBody.linearVelocity = new Vector2(0, 0);
 
             collided = true;
             rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
@@ -119,7 +119,7 @@ public class Plunger : MonoBehaviour
         {
 
             rigidBody = GetComponent<Rigidbody2D>();
-            rigidBody.velocity = new Vector2(Mathf.Clamp(43f + PlayerController.pv, 43, 63) * PlayerController.plscale, 0.0f);
+            rigidBody.linearVelocity = new Vector2(Mathf.Clamp(43f + PlayerController.pv, 43, 63) * PlayerController.plscale, 0.0f);
             MOVE = true;
         }
         

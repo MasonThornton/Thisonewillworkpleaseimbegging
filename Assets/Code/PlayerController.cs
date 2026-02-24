@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
 
     {
 
-           Vector3 pv = rigidBody.velocity;
+           Vector3 pv = rigidBody.linearVelocity;
         py = transform.position.y;
 
         if (gameObject.tag == "Player" && dead == true)
@@ -119,9 +119,9 @@ public class PlayerController : MonoBehaviour
         {
             plscaleNotDashing = plscale;
         }
-        float xSpeed = Mathf.Abs(rigidBody.velocity.x);
+        float xSpeed = Mathf.Abs(rigidBody.linearVelocity.x);
         animator.SetFloat("xspeed", xSpeed);
-        float ySpeed = Mathf.Abs(rigidBody.velocity.y);
+        float ySpeed = Mathf.Abs(rigidBody.linearVelocity.y);
         animator.SetFloat("yspeed", ySpeed);
 
       
@@ -211,7 +211,7 @@ public class PlayerController : MonoBehaviour
             {
                 isDashing = false;
                 running = true;
-                rigidBody.velocity = new Vector2(0, 0);
+                rigidBody.linearVelocity = new Vector2(0, 0);
                 dashTimeDone = false;
  
 
@@ -258,7 +258,7 @@ public class PlayerController : MonoBehaviour
             if (isDashing == true)
             {
 
-                rigidBody.velocity = new Vector2(-dashDif + (43 * plscaleNotDashing), 0);
+                rigidBody.linearVelocity = new Vector2(-dashDif + (43 * plscaleNotDashing), 0);
             }
 
          
@@ -283,14 +283,14 @@ public class PlayerController : MonoBehaviour
                 else if (isDashing == false)
                 {
                 //walk movement
-                    rigidBody.velocity = new Vector2(speed * h, rigidBody.velocity.y);
+                    rigidBody.linearVelocity = new Vector2(speed * h, rigidBody.linearVelocity.y);
 
             }
             }
             else if (isDashing == false)
             {
                 //allow a small amount of movement in the air
-                float vx = rigidBody.velocity.x;
+                float vx = rigidBody.linearVelocity.x;
                 if (h * vx < airControlMax && isDashing == false)
             {
                     rigidBody.AddForce(new Vector2(h * airControlForce, 0));
